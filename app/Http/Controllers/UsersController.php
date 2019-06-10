@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Lesson;
 
 class UsersController extends Controller
 {
@@ -85,5 +86,19 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    public function dashboard() {
+        
+        $userId = \Auth::id();
+        
+        $user = User::find($userId);
+        
+        $lessons = $user->completed_lessons->take(4);
+        
+        $lastLesson = $user->completed_lessons()->orderBy('order', 'desc')->first();
+        $nextLesson = Lesson::whereNotIn('id', $user->completed_lessons->pluck('id')->toArray())->orderBy('order')->first();
+        
+        return view('users.show', ['user'=>$user, 'lastLesson'=>$lastLesson, 'nextLesson'=>$nextLesson,'lessons'=>$lessons]);
     }
 }

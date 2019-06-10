@@ -8,17 +8,20 @@
         
         <div class="collapse navbar-collapse" id="nav-bar">
             <ul class="navbar-nav mr-auto">
+                @if(Auth::check())
+                <li class="nav-item">{!! link_to_route('lessons.index', 'Lessons', [], ['class'=>'nav-link']) !!}</li>
                 <li class="nav-item">{!! link_to_route('users.index', 'Ranking', [], ['class'=>'nav-link']) !!}</li>
+                @endif
             </ul>
             <ul class="navbar-nav">
                 @if (Auth::check())
                     <li class="nav-item">
-                        <img src="{{ Auth::user()->image ? 'Auth::user()->image' : '' }}" width="40" height="40" alt="" class="rounded-circle d-none d-md-block shadow">
+                        <img src="{{ asset(Auth::user()->image) }}" width="40" height="40" alt="" class="rounded-circle d-none d-md-block shadow">
                     </li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li class="dropdown-item">{!! link_to_route('users.show', 'Dashboard', ['user'=>Auth::user()]) !!}</li>
+                            <li class="dropdown-item">{!! link_to_route('users.dashboard', 'Dashboard', ['user'=>Auth::user()]) !!}</li>
                             <li class="dropdown-divider"></li>
                             <li class="dropdown-item">{!! link_to_route('logout.get', 'Logout') !!}</li>
                         </ul>

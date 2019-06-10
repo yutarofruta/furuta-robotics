@@ -20,6 +20,14 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 Route::group(['middleware'=>['auth']], function () {
     
     Route::resource('users', 'UsersController');
+    Route::get('dashboard', 'UsersController@dashboard')->name('users.dashboard');
+    
+    Route::get('lessons', 'LessonsController@index')->name('lessons.index');
+    Route::get('lessons/{id}', 'LessonsController@show')->name('lessons.show');
+    Route::get('lessons/{id}/study', 'LessonsController@study')->name('lessons.study');
+    
+    Route::post('lessons/{id}/complete', 'CompleteController@store')->name('lessons.complete');
+    Route::delete('lessons/{id}/incomplete', 'CompleteController@destroy')->name('lessons.incomplete');
 });
 
 
