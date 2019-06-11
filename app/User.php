@@ -27,6 +27,16 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     
+    public function getImageAttribute($image) {
+        
+        if($image) {
+            return $image;
+        }
+        else {
+            return 'storage/img/user_icon.png';
+        }
+    }
+    
     public function completed_lessons() {
         //クリア済みのレッスンを取得
         return $this->belongsToMany(Lesson::class, 'user_lesson', 'user_id', 'lesson_id')->withTimestamps();
@@ -37,12 +47,16 @@ class User extends Authenticatable
         //すでにコンプリートしているかのチェック
         $exist = $this->is_completed($lessonId);
         
+        $lesson = Lesson::find($lessonId);
+        
         if($exist) {
             //既習であれば何もしない
             return false;
         } else {
-            //既習で無ければ、コンプリートする
+            //既習で無ければ、経験値を増やしてコンプリートする
             $this->completed_lessons()->attach($lessonId);
+            $this->exp += 100 + 50 * $lesson->level;
+            $this->save();
             return true;
         }
     }

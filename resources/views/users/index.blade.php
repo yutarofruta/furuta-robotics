@@ -4,10 +4,10 @@
 <h1 class="text-center">USERS RANKING</h1>
 
 @if (count($users) > 0)
-<table class="table table-striped">
+<table class="table table-striped text-center">
     <thead>
         <tr>
-            <th>Id</th>
+            <th>Rank</th>
             <th>Image</th>
             <th>Name</th>
             <th>Exp</th>
@@ -16,10 +16,10 @@
     <tbody>
     @foreach ($users as $user)
         <tr>
-            <th scope="row">{{ $user->id }}</th>
-            <td><img src="{{ asset($user->image) }}" alt="" class="" height="100" width="100"></td>
-            <td>{{ $user->name }}</td>
-            <td>{{ $user->exp }}</td>
+            <th width="30%">{{ $user->id }}</th>
+            <td width="10%"><img src="{{ asset($user->image) }}" alt="" class="img-fluid"></td>
+            <td width="30%">{{ $user->name }}</td>
+            <td width="30%">{{ $user->exp }}</td>
         </tr>
     @endforeach
     </tbody>

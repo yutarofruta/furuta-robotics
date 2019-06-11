@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="card">
+<div class="card {{Auth::user()->is_completed($lesson->id) ? 'cleared-flag' : ''}}">
     <div class="card-body">
         <div class="row">
             <div class="col-md-6 text-center">
-                <img src="{{ asset($lesson->image) }}" class="img-fluid">
+                <img src="{{ asset($lesson->image_url) }}" class="img-fluid">
             </div>
             <div class="col-md-6 d-flex flex-column justify-content-center">
                 <h1 class="card-title">{{ $lesson->title }}

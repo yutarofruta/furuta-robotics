@@ -94,11 +94,29 @@ class UsersController extends Controller
         
         $user = User::find($userId);
         
-        $lessons = $user->completed_lessons->take(4);
+        $completed_lessons = $user->completed_lessons()->orderBy('order', 'desc')->take(4)->get();
         
         $lastLesson = $user->completed_lessons()->orderBy('order', 'desc')->first();
         $nextLesson = Lesson::whereNotIn('id', $user->completed_lessons->pluck('id')->toArray())->orderBy('order')->first();
         
-        return view('users.show', ['user'=>$user, 'lastLesson'=>$lastLesson, 'nextLesson'=>$nextLesson,'lessons'=>$lessons]);
+        $data = [
+            'user'=>$user,
+            'lastLesson'=>$lastLesson,
+            'nextLesson'=>$nextLesson,
+            'completed_lessons'=>$completed_lessons,
+        ];
+        
+        $data += $this->counts($user);
+        
+        return view('users.show', $data);
+    }
+    
+    public function completed() {
+        
+        $user = \Auth::user();
+        
+        $completed_lessons = $user->completed_lessons;
+        
+        return view('users.completed', ['completed_lessons'=>$completed_lessons]);
     }
 }

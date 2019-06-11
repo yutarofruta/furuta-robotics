@@ -21,6 +21,7 @@ Route::group(['middleware'=>['auth']], function () {
     
     Route::resource('users', 'UsersController');
     Route::get('dashboard', 'UsersController@dashboard')->name('users.dashboard');
+    Route::get('users/{id}/completed', 'UsersController@completed')->name('users.completed');
     
     Route::get('lessons', 'LessonsController@index')->name('lessons.index');
     Route::get('lessons/{id}', 'LessonsController@show')->name('lessons.show');

@@ -3,23 +3,24 @@
 @section('content')
 <div id="slider" class="carousel slide" data-ride="carousel" data-wrap="false">
             <ol class="carousel-indicators">
-              <li data-target="#slider" data-slide-to="0"></li>
-              <li data-target="#slider" data-slide-to="1"></li>
-              <li data-target="#slider" data-slide-to="2"></li>
-              <li data-target="#slider" data-slide-to="3"></li>
+              @for($i=0; $i<$count_slides+2; $i++)
+              <li data-target="#slider" data-slide-to="{{ $i }}"></li>
+              @endfor
             </ol>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img class="d-block img-fluid" src="https://source.unsplash.com/wgq4eit198Q/1200x500" alt="First Slide">
+                <img class="d-block img-fluid" src="/storage/img/first_slide.jpg" alt="First Slide">
+                <div class="carousel-caption">
+                  Start
+                </div>
               </div>
+              @foreach($slides as $slide)
               <div class="carousel-item">
-                <img class="d-block img-fluid" src="https://source.unsplash.com/WLUHO9A_xik/1200x500" alt="Second Slide">
+                <img class="d-block img-fluid" src="{{ asset($slide->image_url) }}" alt="Slide {{ $slide->order }}">
               </div>
+              @endforeach
               <div class="carousel-item">
-                <img class="d-block img-fluid" src="https://source.unsplash.com/4yta6mU66dE/1200x500" alt="Third Slide">
-              </div>
-              <div class="carousel-item">
-                <img class="d-block img-fluid" src="https://source.unsplash.com/4yta6mU66dE/1200x500" alt="Last Slide">
+                <img class="d-block img-fluid" src="/storage/img/last_slide.jpg" alt="Last Slide">
                 <div class="carousel-caption">
                   @if(Auth::user()->is_completed($lesson->id))
                     {{ link_to_route('users.dashboard', 'CLEAR', [], ['class'=>'btn btn-info']) }}

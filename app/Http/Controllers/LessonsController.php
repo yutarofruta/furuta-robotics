@@ -27,6 +27,16 @@ class LessonsController extends Controller
         
         $lesson = Lesson::find($id);
         
-        return view('lessons.study', ['lesson'=>$lesson]);
+        $slides = $lesson->slides()->orderBy('order')->get();
+        
+        $count_slides = $lesson->slides()->count();
+        
+        $data = [
+          'lesson' => $lesson,
+          'slides' => $slides,
+          'count_slides' => $count_slides
+        ];
+        
+        return view('lessons.study', $data);
     }
 }
