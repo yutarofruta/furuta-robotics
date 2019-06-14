@@ -25,7 +25,11 @@ class LessonsController extends Controller
     
     public function study($id) {
         
+        $user = \Auth::user();
+    
         $lesson = Lesson::find($id);
+                        
+        $comment = $lesson->comments()->where('user_id', $user->id)->first();
         
         $slides = $lesson->slides()->orderBy('order')->get();
         
@@ -33,6 +37,7 @@ class LessonsController extends Controller
         
         $data = [
           'lesson' => $lesson,
+          'comment' => $comment,
           'slides' => $slides,
           'count_slides' => $count_slides
         ];

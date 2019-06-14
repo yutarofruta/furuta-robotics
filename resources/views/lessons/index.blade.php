@@ -24,4 +24,6 @@
     @endif
 </div>
 
+{{ $lessons->render('pagination::bootstrap-4') }}
+
 @endsection

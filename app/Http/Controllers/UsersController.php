@@ -90,9 +90,7 @@ class UsersController extends Controller
     
     public function dashboard() {
         
-        $userId = \Auth::id();
-        
-        $user = User::find($userId);
+        $user = \Auth::user();
         
         $completed_lessons = $user->completed_lessons()->orderBy('order', 'desc')->take(4)->get();
         
@@ -115,7 +113,13 @@ class UsersController extends Controller
         
         $user = \Auth::user();
         
-        $completed_lessons = $user->completed_lessons;
+        //次ページで$completed_lesson->commentsをするとN+1問題が起きるので、ここでコメントも取得しておく
+        //ユーザのコメントを事前取得しつつ、ユーザのクリアしたレッスンを取得する
+        $completed_lessons = $user->completed_lessons()->with(['comments' => function ($query) use ($user) {
+                                return $query->where('user_id', $user->id);
+                            }])->orderBy('order')->paginate(12);
+
+        //(クリアしたレッスンのユーザコメント)を事前情報として持つ、ユーザのクリアレッスンが取得される
         
         return view('users.completed', ['completed_lessons'=>$completed_lessons]);
     }

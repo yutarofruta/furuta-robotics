@@ -9,7 +9,7 @@
 
             <hr class="my-4">
 
-            <h3>Complited Lessons</h3>
+            <h3>Completed Lessons</h3>
             <p class="display-4">{{ $count_completed_lessons }}</p>
             <div class="progress">
                 <div class="progress-bar bg-success" style="width:{{ $count_completed_lessons / $count_all_lessons * 100 }}%"></div>

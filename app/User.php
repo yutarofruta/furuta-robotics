@@ -79,4 +79,31 @@ class User extends Authenticatable
     public function is_completed($lessonId) {
         return $this->completed_lessons()->where('lesson_id', $lessonId)->exists();
     }
+    
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
+    
+    public function make_comment($lessonId, $content) {
+       
+        //すでにコメントしていないか念のためチェック
+        $exist = $this->is_commented($lessonId);
+        
+        if($exist) {
+            //コメント済であれば何もしない
+            return false;
+        } else {
+            //コメント済で無ければ、コメントの存在を記録する
+            Comment::create([
+                'content' => $content,
+                'user_id' => $this->id,
+                'lesson_id' => $lessonId
+            ]);
+            return true;
+        }
+    }
+    
+    public function is_commented($lessonId) {
+        return $this->comments()->where('lesson_id', $lessonId)->exists();
+    }
 }

@@ -17,4 +17,8 @@ class Lesson extends Model
     public function slides() {
         return $this->hasMany(Slide::class);
     }
+    
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
 }

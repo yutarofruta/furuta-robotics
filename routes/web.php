@@ -28,6 +28,7 @@ Route::group(['middleware'=>['auth']], function () {
     Route::get('lessons/{id}/study', 'LessonsController@study')->name('lessons.study');
     
     Route::post('lessons/{id}/complete', 'CompleteController@store')->name('lessons.complete');
+    Route::put('lessons/{id}/edit', 'CompleteController@edit')->name('lessons.edit');
     Route::delete('lessons/{id}/incomplete', 'CompleteController@destroy')->name('lessons.incomplete');
 });
 
