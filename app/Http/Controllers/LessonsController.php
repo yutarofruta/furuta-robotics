@@ -33,14 +33,18 @@ class LessonsController extends Controller
         $comment = $lesson->comments()->where('user_id', $user->id)->first();
         
         $slides = $lesson->slides()->orderBy('order')->get();
+        $videos = $lesson->videos()->orderBy('order')->get();
         
         $count_slides = $lesson->slides()->count();
+        $count_videos = $lesson->videos()->count();
         
         $data = [
           'lesson' => $lesson,
           'comment' => $comment,
           'slides' => $slides,
-          'count_slides' => $count_slides
+          'videos' => $videos,
+          'count_slides' => $count_slides,
+          'count_videos' => $count_videos,
         ];
         
         return view('lessons.study', $data);

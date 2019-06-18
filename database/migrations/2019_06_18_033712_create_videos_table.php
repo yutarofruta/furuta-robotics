@@ -15,7 +15,7 @@ class CreateVideosTable extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('video_id');
+            $table->string('video_url');
             $table->integer('lesson_id')->unsigned()->index();
             $table->integer('order');
             $table->timestamps();

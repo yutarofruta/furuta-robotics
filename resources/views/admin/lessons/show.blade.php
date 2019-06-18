@@ -33,6 +33,30 @@
 {!! Form::close() !!}
 
 @endforeach
+
+</div>
+
+{!! Form::open(['route' =>['admin.videos.store', 'id'=>$lesson->id]]) !!}
+                
+    <div class="form-group">
+        {!! Form::label('video_url', 'Video URL') !!} <br>
+        {!! Form::text('video_url','', ['class'=>'form-control']) !!}
+    </div>
+    
+    {!! Form::submit('Add Videos', ['class' => 'btn btn-primary']) !!}
+{!! Form::close() !!}
+
+<div>
+@foreach($videos as $video)
+
+<p>Video order : {{$loop->iteration}}</p>
+<iframe width="300" src="{{ $video->video_url }}" frameborder="0" allowfullscreen></iframe>
+{!! Form::open(['route'=>['admin.videos.destroy', $video->id], 'method'=>'DELETE']) !!}
+    {!! Form::submit('Delete this Video', ['class'=>'btn btn-warning']) !!}
+{!! Form::close() !!}
+
+@endforeach
+
 </div>
 
 <hr>

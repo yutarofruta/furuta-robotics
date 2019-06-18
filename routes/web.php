@@ -39,6 +39,9 @@ Route::group(['middleware'=>['auth']], function () {
         Route::resource('lessons', 'AdminLessonController');
         Route::post('lessons/{id}/slides/create', 'AdminLessonController@store_slides')->name('slides.store');
         Route::delete('lessons/{id}/slides/destroy', 'AdminLessonController@destroy_slides')->name('slides.destroy');
+        Route::post('lessons/{id}/videos/create', 'AdminLessonController@store_videos')->name('videos.store');
+        Route::delete('lessons/{id}/videos/destroy', 'AdminLessonController@destroy_videos')->name('videos.destroy');
+
     });
 
 });

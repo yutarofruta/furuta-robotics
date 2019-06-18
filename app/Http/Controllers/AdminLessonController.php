@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Lesson;
 use App\Slide;
+use App\Video;
 
 class AdminLessonController extends Controller
 {
@@ -75,8 +76,15 @@ class AdminLessonController extends Controller
         $lesson = Lesson::find($id);
         
         $slides = $lesson->slides;
+        $videos = $lesson->videos;
         
-        return view('admin.lessons.show', ['lesson'=>$lesson, 'slides'=>$slides]);
+        $data = [
+            'lesson' => $lesson,
+            'slides' => $slides,
+            'videos' => $videos,
+        ];
+        
+        return view('admin.lessons.show', $data);
     }
 
     /**
@@ -150,9 +158,15 @@ class AdminLessonController extends Controller
         $path = Storage::disk('s3')->putFile('/', $image, 'public');
         
         $lesson = Lesson::find($id);
-        //一番最後のslideのorderを取得する
-        $lastSlide_order = $lesson->slides()->orderBy('order', 'desc')->first()->order;
         
+        //スライドの数が0で無ければ、一番最後のslideのorderを取得する
+        if($lesson->slides()->count() != 0) {
+            $lastSlide_order = $lesson->slides()->orderBy('order', 'desc')->first()->order;
+        }
+        else {  //もしスライドが無ければ0に戻しちゃう
+            $lastSlide_order = 0;
+        }
+
         $lesson->slides()->create([
             'image_url'=>Storage::disk('s3')->url($path),
             'order' => $lastSlide_order + 10,  //最後のスライドの順番+10にする
@@ -163,7 +177,42 @@ class AdminLessonController extends Controller
     
     public function destroy_slides($id)
     {
-        Slide::find($id)->delete();
+        $slide = Slide::find($id);
+        
+        $disk = Storage::disk('s3');
+        $disk->delete($slide->image_url);
+        $slide->delete();
+        
+        return back();
+    }
+    
+    public function store_videos(Request $request, $id)
+    {
+        $this->validate($request, [
+            'video_url' => 'required|active_url',
+        ]);
+        
+        $lesson = Lesson::find($id);
+        
+        //ビデオの数が0で無ければ、一番最後のvideoのorderを取得する
+        if($lesson->videos()->count() != 0) {
+            $lastVideo_order = $lesson->videos()->orderBy('order', 'desc')->first()->order;
+        }
+        else {  //もしビデオが無ければ0に戻しちゃう
+            $lastVideo_order = 0;
+        }
+
+        $lesson->videos()->create([
+            'video_url'=>$request->video_url,
+            'order' => $lastVideo_order + 10,  //最後のビデオの順番+10にする
+        ]);
+        
+        return back();
+    }
+    
+    public function destroy_videos($id)
+    {
+        Video::find($id)->delete();
         
         return back();
     }

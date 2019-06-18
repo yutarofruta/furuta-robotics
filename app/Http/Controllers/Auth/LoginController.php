@@ -36,4 +36,10 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    
+    //オーバーライドしてnameでログインされるようにする
+    public function username()
+    {
+        return 'name'; //ユーザー名
+    }
 }

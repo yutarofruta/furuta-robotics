@@ -3,7 +3,7 @@
 @section('study')
 <div id="slider" class="carousel slide" data-ride="carousel" data-wrap="false">
             <ol class="carousel-indicators">
-              @for($i=0; $i<$count_slides+2; $i++)
+              @for($i=0; $i<$count_slides+$count_videos+2; $i++)
               <li data-target="#slider" data-slide-to="{{ $i }}"></li>
               @endfor
             </ol>
@@ -14,15 +14,17 @@
                   Start
                 </div>
               </div>
-              <div class="carousel-item">
-                <img class="d-block img-fluid" src="/storage/img/first_slide.jpg" alt="First Slide" width="100%">
-                <div class="carousel-caption">
-                  <iframe width="800" height="450" src="https://www.youtube.com/embed/IB0VohcZ3Nk?modestbranding=1&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>
-                </div>
-              </div>
               @foreach($slides as $slide)
               <div class="carousel-item">
                 <img class="d-block img-fluid" src="{{ asset($slide->image_url) }}" alt="Slide {{ $slide->order }}" width="100%">
+              </div>
+              @endforeach
+              @foreach($videos as $video)
+              <div class="carousel-item">
+                <img class="d-block img-fluid" src="/storage/img/first_slide.jpg" alt="First Slide" width="100%">
+                <div class="carousel-caption">
+                  <iframe width="800" height="450" src="{{ $video->video_url }}" frameborder="0" allowfullscreen></iframe>
+                </div>
               </div>
               @endforeach
               <div class="carousel-item">

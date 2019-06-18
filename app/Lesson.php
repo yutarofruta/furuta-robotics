@@ -21,4 +21,8 @@ class Lesson extends Model
     public function comments() {
         return $this->hasMany(Comment::class);
     }
+    
+    public function videos() {
+        return $this->hasMany(Video::class);
+    }
 }
