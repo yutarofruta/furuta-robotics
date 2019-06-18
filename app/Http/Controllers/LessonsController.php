@@ -12,14 +12,15 @@ class LessonsController extends Controller
         
         $lessons = Lesson::orderBy('order')->paginate(12);
         
-        return view('lessons.index', ['lessons'=>$lessons]);
+        $nextLesson = Lesson::whereNotIn('id', \Auth::user()->completed_lessons->pluck('id')->toArray())->orderBy('order')->first();
+
+        return view('lessons.index', ['lessons'=>$lessons, 'nextLesson'=>$nextLesson]);
     }
     
     public function show($id) {
         
         $lesson = Lesson::find($id);
         $user = \Auth::user();
-        
         return view('lessons.show', ['lesson'=>$lesson, 'user'=>$user]);
     }
     

@@ -14,6 +14,12 @@
                   Start
                 </div>
               </div>
+              <div class="carousel-item">
+                <img class="d-block img-fluid" src="/storage/img/first_slide.jpg" alt="First Slide" width="100%">
+                <div class="carousel-caption">
+                  <iframe width="800" height="450" src="https://www.youtube.com/embed/IB0VohcZ3Nk?modestbranding=1&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
               @foreach($slides as $slide)
               <div class="carousel-item">
                 <img class="d-block img-fluid" src="{{ asset($slide->image_url) }}" alt="Slide {{ $slide->order }}" width="100%">
@@ -49,17 +55,14 @@
                 @if($comment)
                 {!! Form::model($comment, ['route'=>['lessons.edit', $lesson->id], 'method'=>'PUT']) !!}
                   {{ Form::textarea('content', $comment->content, ['class'=>'form-control', 'rows'=>'10']) }}
-                  {{ Form::submit('CLEAR',['class'=>'btn btn-info']) }}
+                  {{ Form::submit('CLEAR',['class'=>'btn btn-info btn-block']) }}
                 {!! Form::close() !!}
                 @else
                 {!! Form::open(['route'=>['lessons.complete', $lesson->id]]) !!}
                   {{ Form::textarea('content', old('content'), ['class'=>'form-control', 'rows'=>'10']) }}
-                  {{ Form::submit('CLEAR',['class'=>'btn btn-info']) }}
+                  {{ Form::submit('CLEAR',['class'=>'btn btn-info btn-block']) }}
                 {!! Form::close() !!}
                 @endif
-                </div>
-                <div class="modal-footer">
-                  <button class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>

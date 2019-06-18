@@ -15,8 +15,12 @@
                   @endfor
                 </div>
                 <img src="{{ asset($lesson->image_url) }}" alt="" class="img-fluid">
-                <p>{{ str_limit($lesson->description, $limit = 10, $end = '...') }}</p>
+                <p>{{ str_limit($lesson->description, $limit = 20, $end = '...') }}</p>
+                @if(Auth::user()->is_completed($lesson->id) || $lesson == $nextLesson)
                 {{ link_to_route('lessons.show', 'View', ['id'=>$lesson->id], ['class'=>'btn btn-info btn-block']) }}
+                @else
+                <a href="" class="btn btn-warning disabled btn-block"><i class="fas fa-lock"></i></a>
+                @endif
               </div>
             </div>
           </div>

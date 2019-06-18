@@ -14,11 +14,9 @@
                 @endfor
                 </h1>
                 <p class="card-text">{{ nl2br($lesson->description) }}</p>
-                @if($user->is_completed($lesson->id))
-                {{ link_to_route('lessons.study', 'Review', ['id'=>$lesson->id], ['class'=>'btn btn-info btn-block']) }}
-                @else
-                {{ link_to_route('lessons.study', 'Start', ['id'=>$lesson->id], ['class'=>'btn btn-info btn-block']) }}
-                @endif
+                
+                {{ link_to_route('lessons.study', 'Start', ['id'=>$lesson->id], ['class'=>'btn btn-info']) }}
+
             </div>
         </div>
     </div>

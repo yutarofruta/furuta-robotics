@@ -17,7 +17,7 @@
     @foreach ($users as $user)
         <tr>
             <th width="30%">{{ $user->id }}</th>
-            <td width="10%"><img src="{{ asset($user->image) }}" alt="" class="img-fluid"></td>
+            <td width="10%"><img src="{{ asset($user->image) }}" alt="" class="img-fluid rounded-circle"></td>
             <td width="30%">{{ $user->name }}</td>
             <td width="30%">{{ $user->exp }}</td>
         </tr>

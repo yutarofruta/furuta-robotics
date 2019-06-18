@@ -13,7 +13,6 @@
 
 Route::get('/', function () { return view('welcome'); })->middleware('guest');
 
-Route::post('signup', 'Auth\RegisterController@register')->name('signup.post');
 Route::post('login', 'Auth\LoginController@login')->name('login.post');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
@@ -28,8 +27,20 @@ Route::group(['middleware'=>['auth']], function () {
     Route::get('lessons/{id}/study', 'LessonsController@study')->name('lessons.study');
     
     Route::post('lessons/{id}/complete', 'CompleteController@store')->name('lessons.complete');
-    Route::put('lessons/{id}/edit', 'CompleteController@edit')->name('lessons.edit');
+    Route::put('lessons/{id}/edit', 'CompleteController@edit')->name('lessons.edit');   //コメント編集
     Route::delete('lessons/{id}/incomplete', 'CompleteController@destroy')->name('lessons.incomplete');
+    
+    //管理画面に関するルーティング
+    Route::group(['prefix'=>'admin', 'as' => 'admin.', 'middleware'=>'admin'], function() {
+        
+        Route::get('/', 'AdminUserController@admin')->name('admin');
+        Route::resource('users', 'AdminUserController');
+        Route::put('users/{id}/password/update', 'AdminUserController@update_password')->name('password.update');
+        Route::resource('lessons', 'AdminLessonController');
+        Route::post('lessons/{id}/slides/create', 'AdminLessonController@store_slides')->name('slides.store');
+        Route::delete('lessons/{id}/slides/destroy', 'AdminLessonController@destroy_slides')->name('slides.destroy');
+    });
+
 });
 
 

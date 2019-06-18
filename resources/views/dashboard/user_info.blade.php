@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body p-4">
         <div class="text-center">
-            <img src="{{ asset($user->image) }}" alt="" class="" height="100" width="100">
+            <img src="{{ asset($user->image) }}" alt="" class="rounded-circle" height="100" width="100">
             <h3 class="mt-4">{{ $user->name }}</h3>
             <hr class="my-4">
             <h3>Exp</h3>

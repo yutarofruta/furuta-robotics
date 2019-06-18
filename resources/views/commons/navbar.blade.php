@@ -11,7 +11,11 @@
                 @if(Auth::check())
                 <li class="nav-item">{!! link_to_route('lessons.index', 'Lessons', [], ['class'=>'nav-link']) !!}</li>
                 <li class="nav-item">{!! link_to_route('users.index', 'Ranking', [], ['class'=>'nav-link']) !!}</li>
+                    @if(Auth::user()->admin == 1)
+                    <li class="nav-item">{!! link_to_route('admin.admin', 'Admin', [], ['class'=>'nav-link']) !!}</li>
+                    @endif
                 @endif
+                
             </ul>
             <ul class="navbar-nav">
                 @if (Auth::check())
@@ -28,7 +32,6 @@
                     </li>
                 @else
                     <li class="nav-item"><a href="" class="nav-link" data-toggle="modal" data-target="#loginModal">Login</a></li>
-                    <li class="nav-item"><a href="" class="nav-link" data-toggle="modal" data-target="#signupModal">Sign up</a></li>
                 @endif
             </ul>
         </div>
@@ -68,43 +71,3 @@
     </div>
 </div>
 
-<!--Signup Modal-->
-<div class="modal fade text-dark" id="signupModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">Sign up</div>
-                <button class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            <!--Form挿入-->
-            {!! Form::open(['route' => 'signup.post']) !!}
-                <div class="form-group">
-                    {!! Form::label('name', 'Name') !!}
-                    {!! Form::text('name', old('name'), ['class' => 'form-control']) !!}
-                </div>
-
-                <div class="form-group">
-                    {!! Form::label('email', 'Email') !!}
-                    {!! Form::email('email', old('email'), ['class' => 'form-control']) !!}
-                </div>
-
-                <div class="form-group">
-                    {!! Form::label('password', 'Password') !!}
-                    {!! Form::password('password', ['class' => 'form-control']) !!}
-                </div>
-
-                <div class="form-group">
-                    {!! Form::label('password_confirmation', 'Confirmation') !!}
-                    {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
-                </div>
-
-                {!! Form::submit('Sign up', ['class' => 'btn btn-primary btn-block']) !!}
-                
-            {!! Form::close() !!}
-            </div>
-        </div>
-    </div>
-</div>
