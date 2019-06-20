@@ -12,35 +12,25 @@ class LessonsController extends Controller
         
         $lessons = Lesson::orderBy('order')->paginate(12);
         
-        //クリアレッスンの一番大きいorderを取得
-        if(\Auth::user()->completed_lessons()->count() != 0) {
-            $order = \Auth::user()->completed_lessons()->orderBy('order', 'desc')->first()->order;
+        $lastLesson = \Auth::user()->completed_lessons()->orderBy('order', 'desc')->first();
+        
+        //もうすでにレッスンをこなしていれば
+        if($lastLesson != null) {
+            //nextLessonはlastLessonの次のorderのものとする
+            $nextLesson = Lesson::where('order', '>', $lastLesson->order)->orderBy('order')->first();
         }
         else {
-            $order = 0;
+            //ユーザがまだ一つもクリアしていない場合はLesson1を表示する
+            $nextLesson = Lesson::orderBy('order')->first();
         }
         
-        //OPENにするレッスンのidを記録するための配列
-        $openLessons = [];
-        //id=1のレッスンは常にOPEN
-        $openLessons[1] = Lesson::orderBy('order')->first();
+        $data = [
+            'lessons'=>$lessons,
+            'lastLesson'=>$lastLesson,
+            'nextLesson'=>$nextLesson,
+        ];
 
-        foreach($lessons as $lesson) {
-            
-            //クリアレッスン0の場合は以下を適用しない
-            if($order != 0) {
-                //クリアしたレッスン+1個のidをキーとして渡しておく
-                //view内ではisset($openLessons[$lesson->id])をしてtrue/falseでOPENを管理する
-                $openLessons[$lesson->id] = $lesson;      
-            }
-
-            //一番大きいorderのクリアレッスンの次のレッスンで最後のキー記録して抜ける
-            if ($lesson->order > $order) {
-                break;
-            }
-        }
-
-        return view('lessons.index', ['lessons'=>$lessons, 'openLessons'=>$openLessons]);
+        return view('lessons.index', $data);
     }
     
     public function show($id) {

@@ -16,10 +16,14 @@
                 </div>
                 <img src="{{ asset($lesson->image_url) }}" alt="" class="img-fluid">
                 <p>{{ str_limit($lesson->description, $limit = 20, $end = '...') }}</p>
-                @if(isset($openLessons[$lesson->id]))
+                @if($nextLesson == null){{-- 全クリ状態 --}}
                   {{ link_to_route('lessons.show', 'View', ['id'=>$lesson->id], ['class'=>'btn btn-info btn-block']) }}
                 @else
-                <a href="" class="btn btn-warning disabled btn-block"><i class="fas fa-lock"></i></a>
+                    @if($lesson->order <= $nextLesson->order)
+                      {{ link_to_route('lessons.show', 'View', ['id'=>$lesson->id], ['class'=>'btn btn-info btn-block']) }}
+                    @else
+                    <a href="" class="btn btn-warning disabled btn-block"><i class="fas fa-lock"></i></a>
+                    @endif
                 @endif
               </div>
             </div>
