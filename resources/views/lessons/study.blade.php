@@ -21,7 +21,7 @@
     @endforeach
     @foreach($videos as $video)
     <div class="carousel-item">
-      <img class="d-block img-fluid" src="/storage/img/first_slide.jpg" alt="First Slide" width="100%">
+      <img class="d-block img-fluid" src="https://yutarofruta.s3.amazonaws.com/last_slide.jpg" alt="Video Slide" width="100%">
       <div class="carousel-caption">
         <iframe width="800" height="450" src="{{ $video->video_url }}" frameborder="0" allowfullscreen></iframe>
       </div>
