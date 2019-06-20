@@ -29,3 +29,13 @@
     transform: rotate(45deg);
     z-index: 3;
 }
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    height: 50px;
+    width: 50px;
+    outline: black;
+    background-color: black;
+    background-size: 50%, 50%;
+    border-radius: 50%;
+    border: 1px solid black;
+}

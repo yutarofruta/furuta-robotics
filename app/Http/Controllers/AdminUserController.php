@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 use App\User;
 use App\Lesson;
+use DB;
 
 class AdminUserController extends Controller
 {
@@ -22,11 +23,31 @@ class AdminUserController extends Controller
     }
      
      
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        //キーワードを取得
+        $keyword = $request->input('keyword');
+
+        //もしキーワードが入力されている場合
+        if(!empty($keyword))
+        {   
+            //nameまたはschoolから検索
+            $users = User::where('name', 'like', '%'.$keyword.'%')
+                            ->orWhere('school', 'like', '%'.$keyword.'%')->get();
+
+        }else{//キーワードが入力されていない場合
+            $users = User::all();
+        }
         
-        return view('admin.users.index', ['users'=>$users]);
+        $lessons = Lesson::all();
+        
+        $data = [
+            'users'=>$users,
+            'keyword' => $keyword,
+            'lessons' => $lessons,
+        ];
+        
+        return view('admin.users.index', $data);
     }
 
     /**

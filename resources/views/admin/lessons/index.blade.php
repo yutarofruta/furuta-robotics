@@ -3,6 +3,8 @@
 @section('content')
 <h1>All Lessons : {{$lessons->count()}}</h1>
 
+{{ link_to_route('admin.lessons.create', 'Create Lesson', [], ['class'=>'btn btn-success']) }}
+
 <table class="table table-sm table-hover table-striped">
     <thead>
         <tr>
@@ -25,6 +27,4 @@
         @endforeach
     </tbody>
 </table>
-
-{{ link_to_route('admin.lessons.create', 'Create Lesson', [], ['class'=>'btn btn-success']) }}
 @endsection

@@ -12,9 +12,24 @@ class LessonsController extends Controller
         
         $lessons = Lesson::orderBy('order')->paginate(12);
         
-        $nextLesson = Lesson::whereNotIn('id', \Auth::user()->completed_lessons->pluck('id')->toArray())->orderBy('order')->first();
+        //OPENにするレッスンのidを記録するための配列
+        $openLessons = [];
+        //クリアレッスンの一番大きいorderを取得
+        $order = \Auth::user()->completed_lessons()->orderBy('order', 'desc')->first()->order;
+        
+        foreach($lessons as $lesson) {
+            
+            //クリアしたレッスン+1のidをキーとして渡しておく
+            //view内ではisset($openLessons[$lesson->id])をしてtrue/falseでOPENを管理する
+            $openLessons[$lesson->id] = $lesson;      
+            
+            //一番大きいorderのクリアレッスンの次のレッスンで最後のキー記録して抜ける
+            if ($lesson->order > $order) {
+                break;
+            }
+        }
 
-        return view('lessons.index', ['lessons'=>$lessons, 'nextLesson'=>$nextLesson]);
+        return view('lessons.index', ['lessons'=>$lessons, 'openLessons'=>$openLessons]);
     }
     
     public function show($id) {

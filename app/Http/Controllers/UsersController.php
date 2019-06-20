@@ -95,7 +95,9 @@ class UsersController extends Controller
         $completed_lessons = $user->completed_lessons()->orderBy('order', 'desc')->take(4)->get();
         
         $lastLesson = $user->completed_lessons()->orderBy('order', 'desc')->first();
-        $nextLesson = Lesson::whereNotIn('id', $user->completed_lessons->pluck('id')->toArray())->orderBy('order')->first();
+        
+        //nextLessonはlastLessonの次のorderのものとする
+        $nextLesson = Lesson::where('order', '>', $lastLesson->order)->orderBy('order')->first();
         
         $data = [
             'user'=>$user,
