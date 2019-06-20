@@ -20,6 +20,11 @@
                 </div>
                 
                 <div class="form-group">
+                    {!! Form::label('school', 'School') !!}
+                    {!! Form::text('school', old('school'), ['class' => 'form-control']) !!}
+                </div>
+                
+                <div class="form-group">
                     {!! Form::label('admin', 'Role') !!} <br>
                     {!! Form::radio('admin', 0, true) !!} General User <br>
                     {!! Form::radio('admin', 1, false) !!} Administrator

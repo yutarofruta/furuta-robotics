@@ -12,17 +12,28 @@ class LessonsController extends Controller
         
         $lessons = Lesson::orderBy('order')->paginate(12);
         
+        //クリアレッスンの一番大きいorderを取得
+        if(\Auth::user()->completed_lessons()->count() != 0) {
+            $order = \Auth::user()->completed_lessons()->orderBy('order', 'desc')->first()->order;
+        }
+        else {
+            $order = 0;
+        }
+        
         //OPENにするレッスンのidを記録するための配列
         $openLessons = [];
-        //クリアレッスンの一番大きいorderを取得
-        $order = \Auth::user()->completed_lessons()->orderBy('order', 'desc')->first()->order;
-        
+        //id=1のレッスンは常にOPEN
+        $openLessons[1] = Lesson::find(1);
+
         foreach($lessons as $lesson) {
             
-            //クリアしたレッスン+1のidをキーとして渡しておく
-            //view内ではisset($openLessons[$lesson->id])をしてtrue/falseでOPENを管理する
-            $openLessons[$lesson->id] = $lesson;      
-            
+            //クリアレッスン0の場合は以下を適用しない
+            if($order != 0) {
+                //クリアしたレッスン+1個のidをキーとして渡しておく
+                //view内ではisset($openLessons[$lesson->id])をしてtrue/falseでOPENを管理する
+                $openLessons[$lesson->id] = $lesson;      
+            }
+
             //一番大きいorderのクリアレッスンの次のレッスンで最後のキー記録して抜ける
             if ($lesson->order > $order) {
                 break;

@@ -74,13 +74,15 @@ class AdminUserController extends Controller
             'password' => 'required|string|min:6|confirmed',
             'image' => 'image',
             'admin' => 'required|integer',
+            'school' => 'required'
         ]);
         
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->name),
+            'password' => bcrypt($request->password),
             'admin' => $request->admin,
+            'school' => $request->school,
         ]);
         
         if($request->hasFile('image')) {
