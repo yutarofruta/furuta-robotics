@@ -49,9 +49,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        
-        return view('users.show', ['user'=>$user]);
+        //
     }
 
     /**
@@ -96,8 +94,9 @@ class UsersController extends Controller
         
         $lastLesson = $user->completed_lessons()->orderBy('order', 'desc')->first();
         
+
         //nextLessonはlastLessonの次のorderのものとする
-        if($user->$completed_lessons) {
+        if($lastLesson != null) {
             $nextLesson = Lesson::where('order', '>', $lastLesson->order)->orderBy('order')->first();
         }
         else {
