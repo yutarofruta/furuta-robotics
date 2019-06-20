@@ -23,7 +23,7 @@ class LessonsController extends Controller
         //OPENにするレッスンのidを記録するための配列
         $openLessons = [];
         //id=1のレッスンは常にOPEN
-        $openLessons[1] = Lesson::find(1);
+        $openLessons[1] = Lesson::orderBy('order')->first();
 
         foreach($lessons as $lesson) {
             

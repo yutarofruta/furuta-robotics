@@ -97,13 +97,13 @@ class UsersController extends Controller
         $lastLesson = $user->completed_lessons()->orderBy('order', 'desc')->first();
         
         //nextLessonはlastLessonの次のorderのものとする
-        if($lastLesson) {
+        if($user->$completed_lessons) {
             $nextLesson = Lesson::where('order', '>', $lastLesson->order)->orderBy('order')->first();
         }
         else {
             //ユーザがまだ一つもクリアしていない場合はLesson1を表示する
             if($user->completed_lessons()->count() == 0) {
-                $nextLesson = Lesson::find(1);
+                $nextLesson = Lesson::orderBy('order')->first();
             }
             else {
                 $nextLesson = null;
