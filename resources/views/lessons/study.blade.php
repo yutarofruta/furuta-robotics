@@ -9,7 +9,7 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="d-block img-fluid" src="/storage/img/first_slide.jpg" alt="First Slide" width="100%">
+      <img class="d-block img-fluid" src="https://yutarofruta.s3.amazonaws.com/first_slide.jpg" alt="First Slide" width="100%">
       <div class="carousel-caption">
         Start
       </div>
@@ -28,7 +28,7 @@
     </div>
     @endforeach
     <div class="carousel-item">
-      <img class="d-block img-fluid" src="/storage/img/last_slide.jpg" alt="Last Slide" width="100%">
+      <img class="d-block img-fluid" src="https://yutarofruta.s3.amazonaws.com/last_slide.jpg" alt="Last Slide" width="100%">
       <div class="carousel-caption">
         <button class="btn btn-primary" data-toggle="modal" data-target="#clearModal">CLEAR</button>
       </div>
