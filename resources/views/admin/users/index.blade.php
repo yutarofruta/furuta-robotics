@@ -2,6 +2,8 @@
 
 @section('content')
 
+{{ link_to_route('admin.admin', 'Back', [], ['class'=>'btn btn-success mb-5']) }}
+
 <h1>All Users : {{$users->count()}}</h1>
 
 {{ link_to_route('admin.users.create', 'Create new User', [], ['class'=>'btn btn-primary mb-5']) }}

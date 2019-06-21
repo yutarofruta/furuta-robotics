@@ -1,9 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+
+{{ link_to_route('admin.lessons.show', 'Back', ['id'=>$lesson->id], ['class'=>'btn btn-success mb-5']) }}
+
 <div class="text-center">
         <h1>Edit Lesson : {{ $lesson->title }}</h1>
-    </div>
+</div>
 
     <div class="row">
         <div class="col-sm-6 offset-sm-3">

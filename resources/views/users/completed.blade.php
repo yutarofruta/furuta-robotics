@@ -24,6 +24,8 @@
             </div>
           </div>
         @endforeach
+    @else
+    <h3>No Completed Lessons.</h3>
     @endif
 </div>
 

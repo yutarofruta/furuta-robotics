@@ -2,6 +2,8 @@
 
 @section('content')
 
+{{ link_to_route('admin.users.index', 'Back', [], ['class'=>'btn btn-success mb-5']) }}
+
 <h1>User Info</h1>
 <p>Name : {{$user->name}}</p>
 <p>Role : {{$user->admin == 1 ? 'Administrator' : 'User'}}</p>

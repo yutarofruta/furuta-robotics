@@ -13,6 +13,8 @@
                 <li class="nav-item">{!! link_to_route('users.index', 'Ranking', [], ['class'=>'nav-link']) !!}</li>
                     @if(Auth::user()->admin == 1)
                     <li class="nav-item">{!! link_to_route('admin.admin', 'Admin', [], ['class'=>'nav-link']) !!}</li>
+                    <li class="nav-item">{!! link_to_route('admin.users.index', 'UsersPanel', [], ['class'=>'nav-link']) !!}</li>
+                    <li class="nav-item">{!! link_to_route('admin.lessons.index', 'LessonsPanel', [], ['class'=>'nav-link']) !!}</li>
                     @endif
                 @endif
                 

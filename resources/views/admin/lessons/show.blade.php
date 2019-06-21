@@ -2,9 +2,11 @@
 
 @section('content')
 
+{{ link_to_route('admin.lessons.index', 'Back', [], ['class'=>'btn btn-success mb-5']) }}
+
 <h1>Lesson Info</h1>
 <p>Title : {{ $lesson->title }}</p>
-{{ link_to_route('admin.lessons.edit', 'Edit', ['id'=>$lesson->id], ['class'=>'btn btn-success']) }}
+{{ link_to_route('admin.lessons.edit', 'Edit', ['id'=>$lesson->id], ['class'=>'btn btn-primary']) }}
 
 <p>Level : {{ $lesson->level }}</p>
 <p>TitleImage : </p>

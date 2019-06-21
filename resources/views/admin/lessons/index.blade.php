@@ -1,9 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+
+
+{{ link_to_route('admin.admin', 'Back', [], ['class'=>'btn btn-success mb-5']) }}
+
 <h1>All Lessons : {{$lessons->count()}}</h1>
 
-{{ link_to_route('admin.lessons.create', 'Create Lesson', [], ['class'=>'btn btn-success']) }}
+{{ link_to_route('admin.lessons.create', 'Create Lesson', [], ['class'=>'btn btn-primary']) }}
 
 <table class="table table-sm table-hover table-striped">
     <thead>
